@@ -1,7 +1,7 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 #define _CRT_SECURE_NO_WARNINGS
-#define ST_NAME "NF"
+#define ST_NAME "big.txt"
 #include "curses.h"
 #include <vector>
 #include <string>
@@ -32,8 +32,6 @@ class Editor {
 	Mode current_mode{ Mode::NORMAL };
 	std::string line = "";;
 	Cursor cursor{};
-	std::size_t file_contents_index = 0;
-	std::size_t top_of_screen_index = 0;
 	std::string copy_buf="";
 	std::string copy_search = "";
 	std::string open_file="";

@@ -16,8 +16,8 @@ public:
 	std::string text_mode = "NAV";
 	std::string command = "";
 	std::string log = "";
+	std::string file_name;
 	int log_pos = 100;
-	int scroll_offset=0;
 
 	Screen(const char* file_name) ;
 	Screen(const Screen& s) = delete;
@@ -27,7 +27,6 @@ public:
 
 	~Screen();
 private:
-	std::string file_name;
 	WINDOW* file_info_bar;
 
 	void move_cursor(const Cursor& cursor) const ;

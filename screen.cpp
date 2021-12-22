@@ -28,14 +28,18 @@ void Screen::display(std::string line, const Cursor& cursor, std::vector<int> le
 	//printw("%s", line.substr(scroll_offset).c_str());
 	
 	//Scroll and efficinity
-	int sum = 0;
-	if (cursor.y > 1)
-		sum = lens[cursor.y-1];
-	int i = 0;
-	if (lens.size() > HEIGHT)
-		i = lens.size() - HEIGHT;
+	int sum = cursor.line_offset;
+	int max = 0;
+	int i = cursor.scroll_y_offset;
+	
+	if (HEIGHT > lens.size()) {
+		max = lens.size();
+	}
+	else {
+		max = HEIGHT;
+	}
 
-	for (; i < lens.size(); ++i) {
+	for (int j=0; j < max; ++j, i++) {
 		printw("%s", line.substr(sum, lens[i]).c_str());
 		sum += lens[i];
 	}
@@ -55,7 +59,8 @@ void Screen::draw_file_info_bar(const Cursor& cursor, std::vector<int> lens) con
 	wclear(file_info_bar);
 
 	mvwprintw(file_info_bar, 0, 1, "%s, MOD: %s, LINE: %d of %d, POS: %d.%d of %d, INDEX: %d", 
-		file_name.c_str(), text_mode.c_str(), cursor.y + 1, lens.size(), cursor.y, cursor.x, lens[cursor.y]-1, cursor.row_offset);
+		file_name.c_str(), text_mode.c_str(), cursor.y+cursor.scroll_y_offset + 1, lens.size(), cursor.y+cursor.scroll_y_offset,
+		cursor.x, lens[cursor.y]-1, cursor.row_offset);
 
 	if (is_file_modified) {
 		mvwprintw(file_info_bar, 0, 0, "*");

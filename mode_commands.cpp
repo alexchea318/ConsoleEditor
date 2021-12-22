@@ -1,16 +1,18 @@
 #include "editor.h"
 
 void Editor::page_scroll(char dir) {
+	int off = cursor.y + cursor.scroll_y_offset;
 	if (dir == 'u') {
-		if (lens.size() > HEIGHT) {
-			go_line(lens.size() - HEIGHT);
+		if (off > HEIGHT) {
+			go_line(off - HEIGHT);
 		}
 		else
 			go_line(1);
 	}
 	else if (dir == 'd') {
-		if (cursor.y + HEIGHT < lens.size())
-			go_line(lens.size() + HEIGHT);
+		if (off + HEIGHT < lens.size()) {
+			go_line(off + HEIGHT);
+		}
 		else
 			go_line(lens.size());
  	}
@@ -130,8 +132,8 @@ void Editor::go_line(int line_num) {
 		return;
 	}
 	--line_num;
-	while (line_num != cursor.y) {
-		line_num > cursor.y ? move_cursor_down() : move_cursor_up();
+	while (line_num != (cursor.y+cursor.scroll_y_offset)) {
+		line_num > (cursor.y + cursor.scroll_y_offset) ? move_cursor_down() : move_cursor_up();
 	}
 }
 

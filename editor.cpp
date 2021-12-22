@@ -12,6 +12,7 @@ Editor::Editor(const char* file_name) : screen{ file_name } {
 void Editor::create_file_contents() {
 	line = "";
 	int i = 0;
+	lens.clear();
 	//open_file = "hw.txt";
 
 	std::fstream file;
@@ -20,8 +21,11 @@ void Editor::create_file_contents() {
 		screen.log = "No File";
 		line += "Hello!";
 		lens.push_back(line.length());
+		screen.file_name = ST_NAME;
 		return;
 	}
+
+	screen.file_name = open_file;
 
 	while (1) {
 		char c = file.get();
@@ -133,10 +137,7 @@ void Editor::normal_mode_action(int character) {
 			go_line(1);
 			break;
 		case 'G':
-			if(lens.size() > HEIGHT)
-				go_line(lens.size() - HEIGHT);
-			else
-				go_line(lens.size());
+			go_line(lens.size());
 			break;
 
 			//Nav special
@@ -261,16 +262,16 @@ void Editor::move_cursor_right() {
 }
 
 void Editor::move_cursor_up() {
-	if (cursor.y > 0) {
-		cursor.y--;
+	if (cursor.y > 0 || cursor.scroll_y_offset>0) {
+		if (cursor.y > 0)
+			--cursor.y;
+		else
+			--cursor.scroll_y_offset;
 
-		//Scroll
-		if (cursor.y > HEIGHT) {
-			screen.scroll_offset = calc_lens(cursor.y - HEIGHT);
-		}
-		else {
-			screen.scroll_offset = 0;
-		}
+		if (cursor.scroll_y_offset > 0)
+			cursor.line_offset = calc_lens(cursor.scroll_y_offset - 1);
+		else
+			cursor.line_offset = 0;
 
 		//Calc offset
 		if (lens[cursor.y] == WIDTH) {
@@ -292,15 +293,16 @@ void Editor::move_cursor_up() {
 
 void Editor::move_cursor_down() {
 	if (cursor.y < lens.size() - 1) {
-		cursor.y++;
+		if (cursor.y + cursor.scroll_y_offset == lens.size() - 1)
+			return;
 
-		//Scroll
-		if (cursor.y > HEIGHT) {
-			screen.scroll_offset = calc_lens(cursor.y- HEIGHT);
-		}
-		else {
-			screen.scroll_offset = 0;
-		}
+		if (cursor.y < HEIGHT - 1)
+			++cursor.y;
+		else
+			++cursor.scroll_y_offset;
+
+		if (cursor.scroll_y_offset > 0) 
+			cursor.line_offset=calc_lens(cursor.scroll_y_offset-1);
 
 		//Offset calc
 		if (lens[cursor.y - 1] == WIDTH) {

@@ -14,5 +14,5 @@ int main(int argc, char** argv) {
 	if (argc > 1) {
 		run_editor(argv[1]);
 	}
-	else run_editor("hw.txt");
+	else run_editor(ST_NAME);
 }

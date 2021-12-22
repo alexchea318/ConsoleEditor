@@ -1,7 +1,7 @@
 #ifndef CURSOR_H
 #define CURSOR_H
 #define WIDTH 120
-#define HEIGHT 30
+#define HEIGHT 28
 
 // A simple struct representing the coordinates of the cursor on the screen.
 // Keep in mind that Cursor does not keep track of where the user is in
@@ -12,6 +12,8 @@ struct Cursor {
 
 	//Help
 	std::size_t row_offset = 0;
+	int line_offset = 0;
+	int scroll_y_offset = 0;
 	Cursor() = default;
 };
 #endif
