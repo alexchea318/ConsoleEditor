@@ -1,7 +1,7 @@
 # ConsoleEditor
 Console text editor with ncurses like nano. Object-oriented programming fully complies with all paradigms (C++ 14). This is my lab.
 ###
-![interface](inter.jpg)
+![interface](trush/inter.jpg)
 
 ## Install
 - This project was creative on Windows
@@ -9,7 +9,7 @@ Console text editor with ncurses like nano. Object-oriented programming fully co
 - On Windows you should connect curses.h and pdcurses.lib in project propirties
 
 ## Functions
-![UML](sheme.jpg)
+![UML](trush/sheme.jpg)
 
 ### Table 1 — Change mode buttons
 ```
