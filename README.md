@@ -7,6 +7,7 @@ Console text editor with ncurses like nano. Object-oriented programming fully co
 - This project was creative on Windows
 - On Linux ncurses can be installed with `sudo apt-get install libncurses5-dev libncursesw5-dev` (Do no forget to change "curses.h" to <curses.h> in headers)
 - On Windows you should connect curses.h and pdcurses.lib in project propirties
+- **There is trush/editor.exe** launch without args or with `./editor.exe file_name`
 
 ## Functions
 ![UML](trush/sheme.jpg)
