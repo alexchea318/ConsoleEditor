@@ -1,7 +1,7 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 #define _CRT_SECURE_NO_WARNINGS
-#define ST_NAME "big.txt"
+#define ST_NAME "NB"
 #include "curses.h"
 #include <vector>
 #include <string>
