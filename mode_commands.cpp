@@ -2,9 +2,11 @@
 
 void Editor::page_scroll(char dir) {
 	if (dir == 'u') {
-		if (lens.size() >= HEIGHT) {
+		if (lens.size() > HEIGHT) {
 			go_line(lens.size() - HEIGHT);
 		}
+		else
+			go_line(1);
 	}
 	else if (dir == 'd') {
 		if (cursor.y + HEIGHT < lens.size())

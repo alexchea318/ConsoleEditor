@@ -130,13 +130,13 @@ void Editor::normal_mode_action(int character) {
 			page_scroll('d');
 			break;
 		case 'g':
-			go_line(0);
+			go_line(1);
 			break;
 		case 'G':
-			if((lens.size() - HEIGHT)>0)
+			if(lens.size() > HEIGHT)
 				go_line(lens.size() - HEIGHT);
 			else
-				go_line(lens.size() - 1);
+				go_line(lens.size());
 			break;
 
 			//Nav special

@@ -24,9 +24,21 @@ Screen::Screen(const char* file_name)
 void Screen::display(std::string line, const Cursor& cursor, std::vector<int> lens) const 
 {
 	clear();
-	std::size_t i = 0;
 
-	printw("%s", line.substr(scroll_offset).c_str());
+	//printw("%s", line.substr(scroll_offset).c_str());
+	
+	//Scroll and efficinity
+	int sum = 0;
+	if (cursor.y > 1)
+		sum = lens[cursor.y-1];
+	int i = 0;
+	if (lens.size() > HEIGHT)
+		i = lens.size() - HEIGHT;
+
+	for (; i < lens.size(); ++i) {
+		printw("%s", line.substr(sum, lens[i]).c_str());
+		sum += lens[i];
+	}
 	/*for (; i < rows; ++i) {
 		printw("~");
 		if (i != rows - 1) {
