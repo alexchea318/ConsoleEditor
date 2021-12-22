@@ -1,5 +1,5 @@
 # ConsoleEditor
-Console text editor with ncurses like nano.
+Console text editor with ncurses like nano. Object-oriented programming fully complies with all paradigms (C++ 14). This is my lab.
 ###
 ![interface](inter.jpg)
 
