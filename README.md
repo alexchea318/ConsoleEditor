@@ -2,14 +2,14 @@
 Text console editor with ncurses
 
 ## Install
-This project was creative on Windows
-On Linux ncurses can be installed with `sudo apt-get install libncurses5-dev libncursesw5-dev` (Do no forget to change "curses.h" to <curses.h> in headers)
-On Windows you should connect curses.h and pdcurses.lib in project propirties
+- This project was creative on Windows
+- On Linux ncurses can be installed with `sudo apt-get install libncurses5-dev libncursesw5-dev` (Do no forget to change "curses.h" to <curses.h> in headers)
+- On Windows you should connect curses.h and pdcurses.lib in project propirties
 
 ## Functions
-![UML](sheme.jpeg)
+![UML](sheme.jpg)
 
-###Table 1 — Change mode buttons
+### Table 1 — Change mode buttons
 ```
 i	Enter text before the cursor.
 I	Go to the beginning of the line and start entering text.
@@ -21,7 +21,7 @@ r	Replace one character under the cursor.
 ?	Activates search mode until the start of the document.
 ESC Escape from mode
 ```
-###Table 2 — Navigation buttons
+### Table 2 — Navigation buttons
 ```
 RIGHT	Moves the cursor one position to the right if it is the end of the line moves to the first position of the next line.
 LEFT	Moves the cursor one position to the left if this is the beginning of the line moves to the end of the previous line.
@@ -33,7 +33,7 @@ g	Moves the cursor to the first page of the text.
 G	Moves the cursor to the last page of the text.
 ```
 
-Table 3 — Navigation command buttons
+### Table 3 — Navigation command buttons
 ```
 ^	Moves the cursor to the start of the line.
 $	Moves the cursor to the end of the line.
@@ -48,7 +48,7 @@ p	Insert after the cursor.
 NG	Go to the line with the number N.
 ```
 
-Table 4 — Find commands and buttons
+### Table 4 — Find commands and buttons
 ```
 / <text>	Search for the <text> string from the cursor to the end of the file. If a line is found, move the cursor to the beginning of the line.
 ? <text>	Search for the <text> string from the cursor to the beginning of the file. If a line is found, move the cursor to the beginning of the line.
@@ -56,7 +56,7 @@ n	Repeat search forward.
 N	Repeat search back.
 ```
 
-Table 5 — Find commands and buttons
+### Table 5 — Find commands and buttons
 ```
 o <filename>	Open the file <filename>.
 x	Write to the current file and close it.
