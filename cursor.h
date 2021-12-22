@@ -1,6 +1,7 @@
 #ifndef CURSOR_H
 #define CURSOR_H
 #define WIDTH 120
+#define HEIGHT 30
 
 // A simple struct representing the coordinates of the cursor on the screen.
 // Keep in mind that Cursor does not keep track of where the user is in

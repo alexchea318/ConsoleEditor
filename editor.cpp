@@ -2,21 +2,31 @@
 
 std::vector<int> lens;
 
-Editor::Editor(const char* file_name)
-	: file{ fopen(file_name, "r+") }, screen{ file_name } {
+Editor::Editor(const char* file_name) : screen{ file_name } {
+	open_file = file_name;
+	create_file_contents();
+
 	screen.display(line, cursor, lens);
 }
 
-std::string Editor::create_file_contents() {
-	std::string line;
-	char c;
+void Editor::create_file_contents() {
+	line = "";
 	int i = 0;
+	//open_file = "hw.txt";
 
-	/*if (file != NULL) {
-		fclose(file);
-	}*/
+	std::fstream file;
+	file.open(open_file, std::ios_base::in);
+	if (!file.is_open()) {
+		screen.log = "No File";
+		line += "Hello!";
+		lens.push_back(line.length());
+		return;
+	}
 
-	while ((c = fgetc(file)) != EOF) {
+	while (1) {
+		char c = file.get();
+		if (file.eof()) break;
+
 		line += c;
 		++i;
 		if (i == WIDTH || c == '\n') {
@@ -25,7 +35,7 @@ std::string Editor::create_file_contents() {
 		}
 	}
 	lens.push_back(i);
-	return line;
+	file.close();
 }
 
 void Editor::process_keypress(int character) {
@@ -123,7 +133,10 @@ void Editor::normal_mode_action(int character) {
 			go_line(0);
 			break;
 		case 'G':
-			go_line(0);;
+			if((lens.size() - HEIGHT)>0)
+				go_line(lens.size() - HEIGHT);
+			else
+				go_line(lens.size() - 1);
 			break;
 
 			//Nav special
@@ -215,6 +228,7 @@ int Editor::clen() {
 	return lens[cursor.y];
 }
 
+//Cursor nav start
 void Editor::move_cursor_start_line() {
 	cursor.row_offset -= cursor.x;
 	cursor.x = 0;
@@ -250,6 +264,15 @@ void Editor::move_cursor_up() {
 	if (cursor.y > 0) {
 		cursor.y--;
 
+		//Scroll
+		if (cursor.y > HEIGHT) {
+			screen.scroll_offset = calc_lens(cursor.y - HEIGHT);
+		}
+		else {
+			screen.scroll_offset = 0;
+		}
+
+		//Calc offset
 		if (lens[cursor.y] == WIDTH) {
 			cursor.row_offset -= WIDTH;
 		}
@@ -271,6 +294,15 @@ void Editor::move_cursor_down() {
 	if (cursor.y < lens.size() - 1) {
 		cursor.y++;
 
+		//Scroll
+		if (cursor.y > HEIGHT) {
+			screen.scroll_offset = calc_lens(cursor.y- HEIGHT);
+		}
+		else {
+			screen.scroll_offset = 0;
+		}
+
+		//Offset calc
 		if (lens[cursor.y - 1] == WIDTH) {
 			cursor.row_offset += WIDTH;
 		}
@@ -302,6 +334,7 @@ void Editor::move_cursor_left() {
 		}
 	}
 }
+//Cursor nav end
 
 
 void Editor::insert_mode_action(int character) {
@@ -467,6 +500,6 @@ void Editor::find_mode_action(int character) {
 }
 
 Editor::~Editor() {
-	fclose(file);
+	//nothing
 }
 

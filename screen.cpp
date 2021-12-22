@@ -26,7 +26,7 @@ void Screen::display(std::string line, const Cursor& cursor, std::vector<int> le
 	clear();
 	std::size_t i = 0;
 
-	printw("%s", line.c_str());
+	printw("%s", line.substr(scroll_offset).c_str());
 	/*for (; i < rows; ++i) {
 		printw("~");
 		if (i != rows - 1) {

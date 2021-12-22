@@ -17,6 +17,7 @@ public:
 	std::string command = "";
 	std::string log = "";
 	int log_pos = 100;
+	int scroll_offset=0;
 
 	Screen(const char* file_name) ;
 	Screen(const Screen& s) = delete;

@@ -1,13 +1,17 @@
 #include "editor.h"
 
-//TODO
 void Editor::page_scroll(char dir) {
 	if (dir == 'u') {
-		go_line(0);
+		if (lens.size() >= HEIGHT) {
+			go_line(lens.size() - HEIGHT);
+		}
 	}
 	else if (dir == 'd') {
-
-	}
+		if (cursor.y + HEIGHT < lens.size())
+			go_line(lens.size() + HEIGHT);
+		else
+			go_line(lens.size());
+ 	}
 }
 
 void Editor::find_letter(char dir, int dist) {
@@ -47,7 +51,6 @@ void Editor::do_w_motion(char dir) {
 	}
 }
 
-//TODO
 void Editor::insert_line() {
 	for (int i = 0; i < copy_buf.length(); ++i) {
 		insert_char(copy_buf[i]);
@@ -233,9 +236,30 @@ bool Editor::do_search_command() {
 }
 
 void Editor::do_com_command() {
-	if (screen.command == "h") {
-		screen.log = "Hello in Chechenev TE! Ins mode: i, I, S, A, r. Find mode: /,?. Exit mode: ESC\n";
-		screen.log_pos = 0;
+	if (screen.command[0] == 'o') {
+		open_file = screen.command.substr(2);
+		create_file_contents();
+	}
+	else if (screen.command == "x") {
+		if (!save(open_file)) return;
+		open_file = ST_NAME;
+		create_file_contents();
+	}
+	else if (screen.command == "w") {
+		save(open_file);
+	}
+	else if (screen.command[0] == 'w') {
+		save(screen.command.substr(2));
+	}
+	else if (screen.command == "q") {
+		exit_editor();
+	}
+	else if (screen.command == "q!") {
+		exit_editor();
+	}
+	else if (screen.command == "wq!") {
+		if (!save(open_file)) return;
+		exit_editor();
 	}
 	else if (isdigit(screen.command[0])) {
 		std::string number;
@@ -251,21 +275,26 @@ void Editor::do_com_command() {
 		int line_num = atoi(number.c_str());
 		go_line(line_num);
 	}
-	else if (screen.command == "q!") {
-		exit_editor();
+	else if (screen.command == "h") {
+		screen.log = "Hello in Chechenev TE! Ins mode: i, I, S, A, r. Find mode: /,?. Exit mode: ESC\n";
+		screen.log_pos = 0;
 	}
 	else {
 		screen.log = "Error!";
 	}
 }
 
-void Editor::save() {
-	rewind(file);
-	/*for (const auto& str : file_contents) {
-		fputs(str.c_str(), file);
-		fputs("\n", file);
-	}*/
+bool Editor::save(std::string save_name) {
+	std::fstream file;
+	file.open(save_name, std::ios_base::out);
+	if (!file.is_open()) {
+		screen.log = "No such file";
+		return 0;
+	}
+	file << line;
+	file.close();
 	screen.is_file_modified = false;
+	return 1;
 }
 
 void Editor::exit_editor() {
