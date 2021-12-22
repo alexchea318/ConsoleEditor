@@ -1,2 +1,0 @@
-I was pretty interested to see how text editors like vim worked, so I decided to try my hand at making my own editor.
-I'm using ncurses here because it's much easier to use than escape sequences, and C++ because I like it better than C, and because I'd never written anything this big in C++ before
