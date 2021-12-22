@@ -1,5 +1,6 @@
 # ConsoleEditor
-Text console editor with ncurses
+Console text editor with ncurses like nano.
+![interface](inter.jpg)
 
 ## Install
 - This project was creative on Windows
